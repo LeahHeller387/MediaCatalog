@@ -1,0 +1,45 @@
+<div class="container ">
+    <h2 class="text-center mt-4 mb-4">Media Catalog – Movies, Series & Games</h2>
+    <div class="d-flex py-4">
+        <button class="btn btn-outline-secondary btn-sm me-2" type="submit" (click)="loadItems()">
+            <i class="bi bi-arrow-clockwise pe-2"></i>Refresh Data</button>
+        <div class="input-group mb-3 w-50 me-4">
+            <div class="input-group-prepend">
+                <button class="btn btn-light" type="button">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+            <input type="search" class="form-control" placeholder="search" (input)="onSearchChange($event)">
+        </div>
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="changeSortDirection()">Sort by {{sortDirection()}}</button>
+    </div>
+    <div class="form-check form-switch mb-4">
+        <input class="form-check-input" type="checkbox" role="switch" id="switchCheckChecked" [checked]="isGridView()"
+            (change)="toggleGridView($event)">
+        <label class="form-check-label" for="switchCheckChecked">Grid View</label>
+    </div>
+    <div *ngIf="error" class="alert alert-danger text-center">
+        {{ error }}
+    </div>
+    <ul class="nav nav-tabs my-4">
+        <li class="nav-item" *ngFor="let entry of uniqueTypes | keyvalue" (click)="filterData(entry.key)">
+            <a class="nav-link" href="#">{{ entry.key }} ({{ entry.value }})</a>
+        </li>
+
+    </ul>
+    <div *ngIf="isGridView(); else listView">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col" *ngFor="let item of filteredItems()">
+                <app-item-card [item]="item"></app-item-card>
+            </div>
+        </div>
+    </div>
+    <ng-template #listView>
+        <div class="row row-cols-1 row-cols-md-1 g-4">
+            <div class="col" *ngFor="let item of filteredItems()">
+                <app-item-card [item]="item"></app-item-card>
+            </div>
+        </div>
+    </ng-template>
+
+</div>

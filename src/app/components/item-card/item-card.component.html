@@ -1,0 +1,10 @@
+<div class="card my-4  text-center">
+<img *ngIf="item.Poster" [src]="item.Poster" class="card-img-top"  (click)="goToItemDetails()" (error)="hideImage()">
+  <div class="card-body py-2">
+    <h5 *ngIf="!titleIsEdit()" (click)="editTitle()">{{item.Title}}</h5>
+    <input *ngIf="titleIsEdit()" type="text" class="form-control form-control-lg border-0 placeholder-bold  text-center" [value]="item.Title"
+ (blur)="finishEdit($event)">
+    <p class="card-text">Type: {{item.Type}} </p>
+    <p class="card-text">Date: {{ item.Year | dateFormat }}</p>
+  </div>
+</div>
